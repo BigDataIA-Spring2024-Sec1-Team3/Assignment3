@@ -9,7 +9,7 @@ import nltk
  
 # Define the XML namespace
 namespace = {'tei': 'http://www.tei-c.org/ns/1.0'}
-input_directory = "../data/input/grobid-files"
+input_directory = "data/input/grobid-files"
 csv_data = []
 
 try:
@@ -61,7 +61,7 @@ try:
                 prev_head_text = head_element.text if head_element is not None else ""
 
     # Write data to CSV file
-    file_path = '../data/input/csv-input-files/pdf_content.csv'
+    file_path = 'data/input/csv-input-files/pdf_content.csv'
     with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
         csv_writer.writerow(['title', 'level', 'year', 'topic_name', 'learning_outcome'])
@@ -99,6 +99,9 @@ class PDFContentClass(BaseModel):
     # Topic validation
     @field_validator("topic_name")
     def validate_topic_name(cls, topic):
+
+        if not topic:
+            raise ValueError("Topic cannot be null or empty.")
         # If topic name starts with number or special character, it will be invalid and raise error
         if not topic[0].isalpha():
             raise ValueError("Topic name cannot start with a number or special character.")
@@ -145,9 +148,4 @@ class PDFContentClass(BaseModel):
         #Skip validation for None or empty strings
         if paragraph in [None, '', 'Nan']:
             return None
-        
-        # If the sentence is not complete in paragraph
-        sentences = nltk.sent_tokenize(paragraph)
-        if not all(sentence.endswith(".") or sentence.endswith(";") or sentence.endswith(":") for sentence in sentences):
-            raise ValueError("Learning Outcome should consist of complete sentences.")
         return paragraph

@@ -121,23 +121,6 @@ class TestPDFContentClassValidation(unittest.TestCase):
         with self.assertRaises(TypeError):
             PDFContentClass.year_must_not_be_from_future("2020")
 
-    def test_learning_outcome_sentence_completeness(self):
-        incomplete_learning_outcome = "Incomplete Learning Outcome"
-        complete_learning_outcome = "Complete Learning Outcome."
-
-        # Test case for incomplete learning outcome
-        with self.subTest("Incomplete Learning Outcome"):
-            # Assert that calling the validation method with incomplete learning outcome raises a ValueError
-            with self.assertRaises(ValueError):
-                PDFContentClass.sentence_completeness_check(incomplete_learning_outcome)
-        
-        # Test case for incomplete learning outcome
-        with self.subTest("Complete Learning Outcome"):
-            # This should not raise any error
-            result = PDFContentClass.sentence_completeness_check(complete_learning_outcome)
-            # Assert that the result is the same as the input (complete learning outcome)
-            self.assertEqual(result, complete_learning_outcome)
-
 
 if __name__ == '__main__':
     unittest.main()
