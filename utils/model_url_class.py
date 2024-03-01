@@ -5,7 +5,7 @@ from typing import Optional
 from datetime import datetime
 import nltk
 
-file_path = 'data\input\scraped_data.csv'
+file_path = '../data/input/csv-input-files/scraped_data.csv'
 try:
     # Attempt to read the CSV with a specified delimiter (e.g., tab)
     data = pd.read_csv(file_path, delimiter='\t')
