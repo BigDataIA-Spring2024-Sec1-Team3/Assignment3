@@ -23,7 +23,7 @@ try:
             # Initialize variables to store data
             title = ""
             topic_name = ""
-            summary = ""
+            learning_outcome = ""
 
             title_element = root.find('.//tei:titleStmt/tei:title', namespace)
 
@@ -44,7 +44,7 @@ try:
                 topic_name = head_element.text if head_element is not None else ""
 
                 # Rule 3: Concatenate all text content within <p> elements
-                summary = ' '.join([p.text.strip() for p in div.findall('.//tei:p', namespace) if p.text is not None])
+                learning_outcome = ' '.join([p.text.strip() for p in div.findall('.//tei:p', namespace) if p.text is not None])
 
                 try:
                     if title == '' and "LEARNING OUTCOMES" in title_element.text:
@@ -52,9 +52,9 @@ try:
                         title = head
                 except:
                     title = "N/A"
-                    
+
                 if topic_name != "LEARNING OUTCOMES":
-                    csv_data.append([level, title, year, topic_name, summary])
+                    csv_data.append([title, level, year, topic_name, learning_outcome])
 
                 # Save the 'head' text of the current 'div' for Rule 1 in the next iteration
                 prev_head_text = head_element.text if head_element is not None else ""
@@ -63,7 +63,7 @@ try:
     file_path = '../data/input/csv-input-files/pdf_content.csv'
     with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(['level', 'title', 'year', 'topic_name', 'summary'])
+        csv_writer.writerow(['title', 'level', 'year', 'topic_name', 'learning_outcome'])
         csv_writer.writerows(csv_data)
 
     print("CSV file generated successfully.")
@@ -82,7 +82,7 @@ class PDFContentClass(BaseModel):
     topic_name: str
     year: Optional[int]
     level: Optional[str]
-    summary: Optional[str]
+    learning_outcome: Optional[str]
 
     # Title validation
     @field_validator("title")
@@ -135,8 +135,8 @@ class PDFContentClass(BaseModel):
         
         return level
     
-    # Summary validation
-    @validator("summary")
+    # Learning Outcome  validation
+    @validator("learning_outcome")
     def sentence_completeness_check(cls, paragraph):
         #Skip validation for None or empty strings
         if paragraph in [None, '', 'Nan']:
@@ -145,5 +145,5 @@ class PDFContentClass(BaseModel):
         # If the sentence is not complete in paragraph
         sentences = nltk.sent_tokenize(paragraph)
         if not all(sentence.endswith(".") or sentence.endswith(";") or sentence.endswith(":") for sentence in sentences):
-            raise ValueError("Introduction/Learning Outcome/Summary should consist of complete sentences.")
+            raise ValueError("Learning Outcome should consist of complete sentences.")
         return paragraph
