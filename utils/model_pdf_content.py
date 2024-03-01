@@ -5,6 +5,7 @@ import pandas as pd
 from pydantic import BaseModel, validator, field_validator
 from typing import Optional
 from datetime import datetime
+import nltk
  
 # Define the XML namespace
 namespace = {'tei': 'http://www.tei-c.org/ns/1.0'}
@@ -91,7 +92,7 @@ class PDFContentClass(BaseModel):
             raise ValueError("Title cannot be null or empty.")
         # If title name starts with number or special character, it will be invalid and raise error
         if not title[0].isalpha():
-            raise ValueError("Topic name cannot start with a number or special character.")
+            raise ValueError("Title cannot start with a number or special character.")
 
         return title
 
@@ -115,6 +116,9 @@ class PDFContentClass(BaseModel):
         #Skip validation for None or empty strings
         if year in [None, '', 'NaN']:
             return None
+        
+        if not isinstance(year, int):
+            raise TypeError("Year field must be an integer")
 
         # check if the year is future year
         current_year = datetime.now().year
@@ -130,13 +134,13 @@ class PDFContentClass(BaseModel):
             return None
         
         # if CFA level is not I, II or III, it is invalid
-        if level not in ['I','II','III']:
+        if level not in ['1','2','3']:
             raise ValueError('Invalid CFA level')
         
         return level
     
     # Learning Outcome  validation
-    @validator("learning_outcome")
+    @field_validator("learning_outcome")
     def sentence_completeness_check(cls, paragraph):
         #Skip validation for None or empty strings
         if paragraph in [None, '', 'Nan']:
