@@ -1,0 +1,4 @@
+file_name,language,version,encoding,file_size,s3_url
+Grobid_RR_2024_l3_combined.txt,en,1.0,UTF-8,32602,https://bigdata-group3-assignment2.s3.amazonaws.com/Grobid/Grobid_RR_2024_l3_combined.txt
+Grobid_RR_2024_l1_combined.txt,en,1.0,UTF-8,52255,https://bigdata-group3-assignment2.s3.amazonaws.com/Grobid/Grobid_RR_2024_l1_combined.txt
+Grobid_RR_2024_l2_combined.txt,en,1.0,UTF-8,50250,https://bigdata-group3-assignment2.s3.amazonaws.com/Grobid/Grobid_RR_2024_l2_combined.txt
