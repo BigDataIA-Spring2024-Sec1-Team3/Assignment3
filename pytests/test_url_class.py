@@ -12,7 +12,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": "Complete Introduction.",
             "learning_outcome": "Complete Learning Outcome.",
             "summary": "Complete Summary.",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/valid_summary",
             "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
         }
         self.assertTrue(URLClass(**valid_data))
@@ -26,7 +26,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": "Complete Introduction.",
             "learning_outcome": "Complete Learning Outcome.",
             "summary": "Complete Summary.",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/valid_summary",
             "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
         }
         self.assertTrue(URLClass(**valid_data))
@@ -40,7 +40,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": "Complete Introduction.",
             "learning_outcome": "Complete Learning Outcome.",
             "summary": "Complete Summary.",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/valid_summary",
             "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
         }
         self.assertTrue(URLClass(**valid_data))
@@ -54,7 +54,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": "Complete Introduction.",
             "learning_outcome": "Complete Learning Outcome.",
             "summary": "Complete Summary.",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid-url",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/valid-url",
             "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
         }
         self.assertTrue(URLClass(**valid_data))
@@ -68,7 +68,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": "Complete Introduction.",
             "learning_outcome": "Complete Learning Outcome.",
             "summary": "Complete Summary.",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/valid_summary",
             "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/finance.pdf"
         }
         self.assertTrue(URLClass(**valid_data))
@@ -83,7 +83,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": None,
             "learning_outcome": None,
             "summary": None,
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/finance-data",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/finance-data",
             "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/invalid.csv"
         }
         with self.assertRaises(ValueError):
@@ -98,7 +98,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": "Complete Introduction.",
             "learning_outcome": "Complete Learning Outcome.",
             "summary": "Complete Summary.",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid-summary",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/valid-summary",
             "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
         }
         with self.assertRaises(ValueError):
@@ -113,7 +113,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": "Complete Introduction.",
             "learning_outcome": "Complete Learning Outcome.",
             "summary": "Complete Summary.",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/valid_summary",
             "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
         }
         with self.assertRaises(ValueError):
@@ -128,7 +128,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": "",
             "learning_outcome": "",
             "summary": "",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/invalid_summary",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/invalid_summary",
             "pdf_file_link": ""
         }
         with self.assertRaises(ValueError):
@@ -143,7 +143,7 @@ class TestURLClassValidation(unittest.TestCase):
             "introduction": "",
             "learning_outcome": "",
             "summary": "",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/invalid url",
+            "summary_page_link": "https://www.cfainstitute.org/membership/professional-development/refresher-readings/invalid url",
             "pdf_file_link": ""
         }
         with self.assertRaises(ValueError):
