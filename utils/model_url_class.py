@@ -5,23 +5,15 @@ from typing import Optional
 from datetime import datetime
 import nltk
 
-file_path = '../data/input/csv-input-files/scraped_data.csv'
-try:
-    # Attempt to read the CSV with a specified delimiter (e.g., tab)
-    data = pd.read_csv(file_path, delimiter='\t')
-    print(data.head())
-except Exception as e:
-    print("Error reading the CSV file:", e)
-    
 class URLClass(BaseModel):
-    topic_name: Optional[str]
-    year: Optional[int]
-    level: Optional[str]
-    introduction: Optional[str]
-    learning_outcome: Optional[str]
-    summary: Optional[str]
-    summary_page_link: Optional[str]
-    pdf_file_link: Optional[str]
+    topic_name: Optional[str]=Field(default=None)
+    year: Optional[int]=Field(default=None)
+    level: Optional[str]=Field(default=None)
+    introduction: Optional[str]=Field(default=None)
+    learning_outcome: Optional[str]=Field(default=None)
+    summary: Optional[str]=Field(default=None)
+    summary_page_link: Optional[str]=Field(default=None)
+    pdf_file_link: Optional[str]=Field(default=None)
     
     # Topic validation
     @field_validator("topic_name")
@@ -31,11 +23,16 @@ class URLClass(BaseModel):
             raise ValueError("Topic cannot be None or Empty")
         
         # If topic name starts with number of special character, it will be invalid and raise error
-        if not topic[0].isalpha():
+        pattern = r'[a-zA-Z]+'
+        # Use re.match to check if the pattern matches the start of the string
+        match = re.match(pattern, topic)
+        if not match:
             raise ValueError("Topic name cannot start with a number or special character.")
 
         # check if it is test refresher reading
-        test_topic = topic.find("TEST RR")
+        test_topic = topic.upper().find("TEST RR")
+        
+        # print("Topic: ",topic,"Test topic:",test_topic)
         if test_topic != -1:    # if test topic found, it returns index
             raise ValueError("Invalid topic. Refresher reading is for test.")
 
@@ -88,7 +85,7 @@ class URLClass(BaseModel):
             raise ValueError("summary website url cannot be None or Empty")
         
         # website url should start with https://
-        if not summary_page_url.startswith("https://www.cfainstitute.org/en/membership/professional-development/refresher-readings"):
+        if not summary_page_url.startswith("https://www.cfainstitute.org/membership/professional-development/refresher-readings"):
             raise ValueError('URL must start with a specific URL prefix')
         
         # Check for spaces in url
