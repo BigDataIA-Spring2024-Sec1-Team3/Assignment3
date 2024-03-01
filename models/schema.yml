@@ -1,0 +1,10 @@
+version: 2
+ 
+models:
+  - name: pdf_model
+    description: Printing Number of articles
+    columns:
+      - name: Number_of_articles
+        tests:
+          - not_null
+ 
