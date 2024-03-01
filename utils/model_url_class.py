@@ -3,7 +3,6 @@ from pydantic import BaseModel, HttpUrl, Field, validator, constr, ValidationErr
 import re
 from typing import Optional
 from datetime import datetime
-import nltk
 
 class URLClass(BaseModel):
     topic_name: Optional[str]=Field(default=None)
@@ -63,19 +62,6 @@ class URLClass(BaseModel):
             raise ValueError('Invalid CFA level')
         
         return level
-
-    # # Introduction, Learning Outcome, Summary validation
-    # @field_validator("introduction", "learning_outcome", "summary")
-    # def sentence_completeness_check(cls, paragraph):
-    #     #Skip validation for None or empty strings
-    #     if paragraph in [None, '', 'Nan']:
-    #         return None
-        
-    #     # If the sentence is not complete in paragraph
-    #     sentences = nltk.sent_tokenize(paragraph)
-    #     if not all(sentence.endswith(".") or sentence.endswith(";") or sentence.endswith(":") for sentence in sentences):
-    #         raise ValueError("Introduction/Learning Outcome/Summary should consist of complete sentences.")
-    #     return paragraph
     
     # summary page link validation
     @field_validator('summary_page_link')
