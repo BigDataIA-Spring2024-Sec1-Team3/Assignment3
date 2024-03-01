@@ -1,5 +1,6 @@
 import pandas as pd
-from pydantic import BaseModel, validator, constr
+from pydantic import BaseModel, HttpUrl, Field, validator, constr, ValidationError, field_validator
+import re
 from typing import Optional
 from datetime import datetime
 import nltk
@@ -13,18 +14,22 @@ except Exception as e:
     print("Error reading the CSV file:", e)
     
 class URLClass(BaseModel):
-    topic_name: [str]
+    topic_name: Optional[str]
     year: Optional[int]
     level: Optional[str]
     introduction: Optional[str]
     learning_outcome: Optional[str]
     summary: Optional[str]
-    summary_page_link: [constr(strict=True)]        # enforcing stricter URL validation
-    pdf_file_Link: Optional[constr(strict=True)]    # enforcing stricter URL validation
-
+    summary_page_link: Optional[str]
+    pdf_file_link: Optional[str]
+    
     # Topic validation
-    @validator("topic_name")
+    @field_validator("topic_name")
     def validate_topic_name(cls, topic):
+        # if topic is empty, raise error
+        if topic in [None, '', 'NaN']:
+            raise ValueError("Topic cannot be None or Empty")
+        
         # If topic name starts with number of special character, it will be invalid and raise error
         if not topic[0].isalpha():
             raise ValueError("Topic name cannot start with a number or special character.")
@@ -37,7 +42,7 @@ class URLClass(BaseModel):
         return topic
     
     # Year validation
-    @validator('year')
+    @field_validator('year')
     def year_must_not_be_from_future(cls, year):
         #Skip validation for None or empty strings
         if year in [None, '', 'NaN']:
@@ -50,7 +55,7 @@ class URLClass(BaseModel):
         return year
 
     # level validation
-    @validator('level')
+    @field_validator('level')
     def cfa_level_validation(cls, level):
         #Skip validation for None or empty strings
         if level in [None, '', 'Nan']:
@@ -62,34 +67,38 @@ class URLClass(BaseModel):
         
         return level
 
-    # Introduction, Learning Outcome, Summary validation
-    @validator("introduction", "learning_outcome", "summary")
-    def sentence_completeness_check(cls, paragraph):
-        #Skip validation for None or empty strings
-        if paragraph in [None, '', 'Nan']:
-            return None
+    # # Introduction, Learning Outcome, Summary validation
+    # @field_validator("introduction", "learning_outcome", "summary")
+    # def sentence_completeness_check(cls, paragraph):
+    #     #Skip validation for None or empty strings
+    #     if paragraph in [None, '', 'Nan']:
+    #         return None
         
-        # If the sentence is not complete in paragraph
-        sentences = nltk.sent_tokenize(paragraph)
-        if not all(sentence.endswith(".") or sentence.endswith(";") or sentence.endswith(":") for sentence in sentences):
-            raise ValueError("Introduction/Learning Outcome/Summary should consist of complete sentences.")
-        return paragraph
+    #     # If the sentence is not complete in paragraph
+    #     sentences = nltk.sent_tokenize(paragraph)
+    #     if not all(sentence.endswith(".") or sentence.endswith(";") or sentence.endswith(":") for sentence in sentences):
+    #         raise ValueError("Introduction/Learning Outcome/Summary should consist of complete sentences.")
+    #     return paragraph
     
     # summary page link validation
-    @validator('summary_page_link')
+    @field_validator('summary_page_link')
     def summary_page_must_start_with_valid_url(cls, summary_page_url):
+        # if summary website url is empty, raise error
+        if summary_page_url in [None, '', 'NaN']:
+            raise ValueError("summary website url cannot be None or Empty")
+        
         # website url should start with https://
         if not summary_page_url.startswith("https://www.cfainstitute.org/en/membership/professional-development/refresher-readings"):
             raise ValueError('URL must start with a specific URL prefix')
         
-        # Check for both leading and trailing spaces
-        if summary_page_url.strip() != summary_page_url:
-            raise ValueError("URL must not contain leading or trailing spaces.")
+        # Check for spaces in url
+        if " " in summary_page_url:
+            raise ValueError("URL cannot contain spaces.")
         
         return summary_page_url
     
     # pdf link validation
-    @validator('pdf_page_link')
+    @field_validator('pdf_file_link')
     def pdf_link_start_end_check(cls, pdf_link_url):
         #Skip validation for None or empty strings
         if pdf_link_url in [None, '', 'Nan']:
@@ -100,7 +109,7 @@ class URLClass(BaseModel):
             raise ValueError("URL must not contain leading or trailing spaces.")
         
         #pdf url should end with .pdf
-        if not pdf_link_url.startswith("https://www.cfainstitute.org/-/media/documents/protected/refresher-reading") and not pdf_link_url.endswith(".pdf"):
+        if not pdf_link_url.startswith("https://www.cfainstitute.org/-/media/documents/protected/refresher-reading") or not pdf_link_url.endswith(".pdf"):
             raise ValueError("PDF must start with a specific URL prefix and end with the .pdf extension")
         
         return pdf_link_url

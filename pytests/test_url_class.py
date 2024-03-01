@@ -1,78 +1,153 @@
-import pytest
-from model_url_class import URLClass
-from pydantic import ValidationError
+import unittest
+from utils.model_url_class import URLClass 
 
-# Success tests with realistic test values
-@pytest.mark.parametrize(
-    "input_data, test_id",
-    [
-        ({
-            "topic_name": "Equity Valuation",
-            "year": 2021,
+class TestURLClassValidation(unittest.TestCase):    
+# Pass test cases
+    def test_valid_topic(self):
+        # Valid URL and data
+        valid_data = {
+            "topic_name": "Balance sheet",
+            "year": 2022,
+            "level": "I",
+            "introduction": "Complete Introduction.",
+            "learning_outcome": "Complete Learning Outcome.",
+            "summary": "Complete Summary.",
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
+        }
+        self.assertTrue(URLClass(**valid_data))
+        
+    def test_valid_level(self):
+        # Valid URL and data
+        valid_data = {
+            "topic_name": "Finance Market",
+            "year": 2022,
             "level": "II",
-            "introduction": "This is an introduction.",
-            "learning_outcome": "The outcome is learning.",
-            "summary": "This is a summary.",
-            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings",
-            "pdf_file_Link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/document.pdf"
-        }, 'pass_test_cases'),
-    ],
-)
-def test_url_class_happy_path(input_data, test_id):
-    # Act
-    url_class_instance = URLClass(**input_data)
+            "introduction": "Complete Introduction.",
+            "learning_outcome": "Complete Learning Outcome.",
+            "summary": "Complete Summary.",
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
+        }
+        self.assertTrue(URLClass(**valid_data))
+        
+    def test_valid_year(self):
+        # Valid URL and data
+        valid_data = {
+            "topic_name": "Finance Market",
+            "year": 2001,
+            "level": "II",
+            "introduction": "Complete Introduction.",
+            "learning_outcome": "Complete Learning Outcome.",
+            "summary": "Complete Summary.",
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
+        }
+        self.assertTrue(URLClass(**valid_data))
+    
+    def test_valid_website_url(self):
+        # Valid URL and data
+        valid_data = {
+            "topic_name": "Finance Market",
+            "year": 2022,
+            "level": "II",
+            "introduction": "Complete Introduction.",
+            "learning_outcome": "Complete Learning Outcome.",
+            "summary": "Complete Summary.",
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid-url",
+            "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
+        }
+        self.assertTrue(URLClass(**valid_data))
+        
+    def test_valid_pdf_url(self):
+        # Valid URL and data
+        valid_data = {
+            "topic_name": "Finance Market",
+            "year": 2000,
+            "level": "II",
+            "introduction": "Complete Introduction.",
+            "learning_outcome": "Complete Learning Outcome.",
+            "summary": "Complete Summary.",
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/finance.pdf"
+        }
+        self.assertTrue(URLClass(**valid_data))
 
-    # Assert
-    assert url_class_instance.topic_name == input_data["topic_name"]
-    assert url_class_instance.year == input_data["year"]
-    assert url_class_instance.level == input_data["level"]
-    assert url_class_instance.introduction == input_data["introduction"]
-    assert url_class_instance.learning_outcome == input_data["learning_outcome"]
-    assert url_class_instance.summary == input_data["summary"]
-    assert url_class_instance.summary_page_link == input_data["summary_page_link"]
-    assert url_class_instance.pdf_file_Link == input_data["pdf_file_Link"]
+# Fail test cases
+    def test_invalid_pdf_url(self):
+        # Valid URL but invalid data
+        invalid_pdf = {
+            "topic_name": "Finance data",
+            "year": 2022,
+            "level": "I",
+            "introduction": None,
+            "learning_outcome": None,
+            "summary": None,
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/finance-data",
+            "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/invalid.csv"
+        }
+        with self.assertRaises(ValueError):
+            URLClass(**invalid_pdf)
 
-# Edge cases
-@pytest.mark.parametrize(
-    "input_data, test_id",
-    [
-        ({
-            "topic_name": "2Equity Valuation",  # starts with a number
-        }, 'edge_case_topic_name_1'),
-        # Add more test cases as needed
-    ],
-)
-def test_url_class_edge_cases(input_data, test_id):
-    # Act & Assert
-    with pytest.raises(ValidationError):
-        URLClass(**input_data)
+    def test_invalid_level(self):
+        # Invalid URL but valid data
+        invalid_level = {
+            "topic_name": "Valid Topic",
+            "year": 2023,
+            "level": "IV",
+            "introduction": "Complete Introduction.",
+            "learning_outcome": "Complete Learning Outcome.",
+            "summary": "Complete Summary.",
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid-summary",
+            "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
+        }
+        with self.assertRaises(ValueError):
+            URLClass(**invalid_level)
+        
+    def test_invalid_topic(self):
+        # Invalid URL and data
+        invalid_topic = {
+            "topic_name": "$Invalid Topic",
+            "year": 2021,
+            "level": "I",
+            "introduction": "Complete Introduction.",
+            "learning_outcome": "Complete Learning Outcome.",
+            "summary": "Complete Summary.",
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/valid_summary",
+            "pdf_file_link": "https://www.cfainstitute.org/-/media/documents/protected/refresher-reading/valid.pdf"
+        }
+        with self.assertRaises(ValueError):
+            URLClass(**invalid_topic)
 
-# Error cases
-@pytest.mark.parametrize(
-    "input_data, expected_exception, test_id",
-    [
-        ({
-            "topic_name": "2Equity Valuation",  # starts with a number
-        }, ValueError, 'error_case_topic_name_1'),
-        ({
-            "year": 3000,  # future year
-        }, ValueError, 'error_case_year_1'),
-        ({
-            "level": "IV",  # invalid level
-        }, ValueError, 'error_case_level_1'),
-        ({
-            "introduction": "This is an incomplete sentence",  # incomplete sentence
-        }, ValueError, 'error_case_introduction_1'),
-        ({
-            "summary_page_link": "http://invalid-link.com",  # invalid URL
-        }, ValueError, 'error_case_summary_page_link_1'),
-        ({
-            "pdf_file_Link": "http://invalid-link.com/document.doc",  # invalid PDF URL
-        }, ValueError, 'error_case_pdf_file_Link_1'),
-        # Add more test cases as needed
-    ],
-)
-def test_url_class_error_cases(input_data, expected_exception, test_id):
-    # Act & Assert
-    with pytest.raises(expected_exception):
-        URLClass(**input_data)
+    def test_empty_topic(self):
+        # Invalid URL and empty data
+        empty_topic = {
+            "topic_name": None,
+            "year": None,
+            "level": "",
+            "introduction": "",
+            "learning_outcome": "",
+            "summary": "",
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/invalid_summary",
+            "pdf_file_link": ""
+        }
+        with self.assertRaises(ValueError):
+            URLClass(**empty_topic)
+
+    def test_invalid_website_url_with_space(self):
+        # Valid URL and empty data
+        invalid_website_url = {
+            "topic_name": "Equity",
+            "year": None,
+            "level": "",
+            "introduction": "",
+            "learning_outcome": "",
+            "summary": "",
+            "summary_page_link": "https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/invalid url",
+            "pdf_file_link": ""
+        }
+        with self.assertRaises(ValueError):
+            URLClass(**invalid_website_url)
+
+if __name__ == '__main__':
+    unittest.main()
