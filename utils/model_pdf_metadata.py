@@ -8,7 +8,7 @@ from pydantic import BaseModel, validator
 
 # Define the loader using GenericLoader
 loader = GenericLoader.from_filesystem(
-    "../data/input/grobid-files",
+    "data/input/grobid-files",
     glob="*",
     suffixes=[".pdf"],
     parser=GrobidParser(segment_sentences=False),
@@ -24,7 +24,7 @@ metadata_list = [doc.metadata for doc in docs]
 fields = ['text', 'para', 'bboxes', 'pages', 'section_title', 'section_number', 'paper_title', 'file_path']
 
 # Define the file path for the output CSV file
-file_path = '../data/input/csv-input-files/pdf_metadata.csv'
+file_path = 'data/input/csv-input-files/pdf_metadata.csv'
 
 # Write metadata to CSV file
 with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
@@ -94,7 +94,7 @@ class PDFMetadataClass(BaseModel):
  
     @validator("file_path")
     def validate_file_path(cls, value):
-        expected_prefix = '../data/pdf_input/'
+        expected_prefix = 'data/input/'
         if not value.startswith(expected_prefix):
             raise ValueError(f"File path must start with '{expected_prefix}'")
         
