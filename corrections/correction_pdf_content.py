@@ -50,7 +50,6 @@ def validate_data(file_path, model):
                     try:
                         # passing the row to pydantic validation model
                         model_instance = model(**row)
-                        # print(model_instance.model_dump()["year"])
                         
                         temp.append(model_instance.model_dump())
                         break
@@ -87,9 +86,9 @@ def clean_csv_generate():
     file_path = 'data/input/csv-input-files/pdf_content.csv'
     list_dict = validate_data(file_path, PDFContentClass)
     df_clean = pd.DataFrame(list_dict)
-
     clean_csv_location = 'data/output/clean_pdf_content.csv'
-    df_clean.to_csv(clean_csv_location, header=True, index=False, sep="\t", float_format='%d')
+    df_clean['level'] = df_clean['level'].replace({'1':'I','2':'II', '3':'III'})
+    df_clean.to_csv(clean_csv_location, header=True, index=False, sep="|", float_format='%d')
     print("Clean CSV file generated successfully.")
 if __name__ == '__main__':
     clean_csv_generate()
