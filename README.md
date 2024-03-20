@@ -183,9 +183,9 @@ By completing this assignment, you will:
 ## Team Information and Contribution
 | Name                      | Contribution % | Contributions |
 | ------------------------- | -------------- | ------------- |
-| Muskan Deepak Raisinghani | 35%            | Schema Validation, pytest and correction for URLClass, Loading data to snowflake, pytest for PDFMetadataClass, Readme |
-| Rachana Keshav            | 33%            | Schema Validation, pytest and correction for PDFContentClass, DBT transformation, schema validation for PDFMetadata |
-| Ritesh Choudhary          | 32%            | Basic Schema validation for all classes, Flow Diagram, Readme, DBT tests |
+| Muskan Deepak Raisinghani | 40%            | Schema Validation, pytest and correction for URLClass, Loading data to snowflake, pytest for PDFMetadataClass, Readme |
+| Rachana Keshav            | 40%            | Schema Validation, pytest and correction for PDFContentClass, DBT transformation, schema validation for PDFMetadata |
+| Ritesh Choudhary          | 20%            | Basic Schema validation for all classes, Flow Diagram, Readme, DBT tests |
 
 ```
 
