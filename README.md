@@ -6,6 +6,14 @@
 
 [![DBT](https://img.shields.io/badge/dbt-FF694B?style=for-the-badge&logo=dbt&logoColor=white)](https://cloud.getdbt.com/)
 
+## Technologies Used
+
+[![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
+[![Grobid](https://img.shields.io/badge/Grobid-007396?style=for-the-badge&logo=git&logoColor=white)](https://github.com/kermitt2/grobid)
+[![Snowflake](https://img.shields.io/badge/Snowflake-366DBF?style=for-the-badge&logo=snowflake&logoColor=white)](https://www.snowflake.com/)
+[![DBT](https://img.shields.io/badge/dbt-FF694B?style=for-the-badge&logo=dbt&logoColor=white)](https://cloud.getdbt.com/)
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-4A569D?style=for-the-badge&logo=sqlalchemy&logoColor=white)](https://www.sqlalchemy.org/)
+
 ## Problem Statement
 
 Many data-driven projects involve extracting data from various sources, such as CSV and XML files, and transforming it for analysis or storage. However, ensuring the quality and integrity of this data throughout the process can be challenging. Schema validation and testing are essential steps to validate and correct data discrepancies before loading it into a data warehouse or database.
@@ -41,13 +49,9 @@ The goal of this project is to develop an ELT (Extract, Load, Transform) framewo
    - This process involved creating models, materializing these models, and conducting tests.
    - After rigorous testing, the models were deployed into both test and production environments, ensuring the data was optimized for actionable insights.
 
-## Technologies Used
+## Architecture:
 
-[![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
-[![Grobid](https://img.shields.io/badge/Grobid-007396?style=for-the-badge&logo=git&logoColor=white)](https://github.com/kermitt2/grobid)
-[![Snowflake](https://img.shields.io/badge/Snowflake-366DBF?style=for-the-badge&logo=snowflake&logoColor=white)](https://www.snowflake.com/)
-[![DBT](https://img.shields.io/badge/dbt-FF694B?style=for-the-badge&logo=dbt&logoColor=white)](https://cloud.getdbt.com/)
-[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-4A569D?style=for-the-badge&logo=sqlalchemy&logoColor=white)](https://www.sqlalchemy.org/)
+![Alt text](./diagrams-and-script/flow_diagram.png)
 
 ## Data Sources
 
